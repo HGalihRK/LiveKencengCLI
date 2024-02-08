@@ -1,0 +1,45 @@
+{
+  "bin": {
+    "start": "dist/main.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.5",
+    "bytenode": "^1.5.3",
+    "chalk": "^4.1.2",
+    "process": "^0.11.10",
+    "qrcode-terminal": "^0.12.0",
+    "readline": "^1.3.0",
+    "util": "^0.12.5",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "@types/qrcode-terminal": "^0.12.2",
+    "terser": "^5.27.0",
+    "terser-webpack-plugin": "^5.3.10",
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "uglifyjs-folder": "^3.3.0",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "scripts": {
+    "start": "npm run compile && node dist/main.js",
+    "compile": "tsc && npm run minify",
+    "minify": "terser dist/main.js -o dist/main.min.js",
+    "build": "ncc build dist/main.min.js -o dist/build",
+    "crypt": "bytenode -c dist/build/index.js",
+    "cpmain": "cp main.js dist/build/main.js",
+    "exe": "nexe -i dist/build/main.js -o dist/build/LiveKencengCLI.exe --build",
+    "build:win": "npm run compile && npm run build  && npm run crypt && npm run cpmain && npm run exe"
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false,
+    "util": false,
+    "readline": false,
+    "process": false
+  }
+}
